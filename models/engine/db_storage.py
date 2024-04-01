@@ -119,14 +119,3 @@ class DBStorage:
     def close(self):
         """Dispose of current session if active"""
         self.__session.remove()
-
-    def get(self, cls, id):
-        """Retrieve object based on class name and id, else None
-        if not found"""
-        cls = classes.get(cls, None)
-        return self.__session.query(cls).filter(cls.id == id).first() \
-            if cls else None
-
-    def count(self, cls=None):
-        """Count number of objects in storage or number of type `cls`"""
-        return len(self.all(cls))
