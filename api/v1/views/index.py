@@ -1,25 +1,37 @@
 #!/usr/bin/python3
-"""
-This is the 'index' module.
-
-This module provides a Flask application instance with a '/status' route.
+"""define routes of blueprint
 """
 
-from flask import Flask, jsonify
 from api.v1.views import app_views
+from models import storage
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models.user import User
 
-# Create a variable app, instance of Flask
-app = Flask(__name__)
 
-# Register the blueprint app_views to your Flask instance app
-app.register_blueprint(app_views)
-
-@app_views.route('/status', methods=['GET'])
+@app_views.route("/status", strict_slashes=False, methods=["GET"])
 def status():
-    """
-    Returns a JSON: "status": "OK"
-    """
-    return jsonify({"status": "OK"})
+    return {
+        "status": "OK",
+    }
 
-if __name__ == "__main__":
-    app.run()
+
+@app_views.route("/stats", strict_slashes=False, methods=["GET"])
+def stats():
+    amenities = storage.count(Amenity)
+    cities = storage.count(City)
+    places = storage.count(Place)
+    reviews = storage.count(Review)
+    states = storage.count(State)
+    users = storage.count(User)
+    return {
+        "amenities": amenities,
+        "cities": cities,
+        "places": places,
+        "reviews": reviews,
+        "states": states,
+        "users": users,
+    }
