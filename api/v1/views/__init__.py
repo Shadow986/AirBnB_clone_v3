@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-"""
-This is the '__init__' module.
-
-This module provides a Flask Blueprint instance with a '/api/v1' prefix.
-"""
+"""sharing app_views Blueprint"""
 
 from flask import Blueprint
+app_views = Blueprint('app_views', __name__)
 from api.v1.views.index import *
-from api.v1.views.state import *
-
-# Create a variable app_views which is an instance of Blueprint
-app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
+from api.v1.views.states import *
+from api.v1.views.cities import *
+from api.v1.views.amenities import *
+from api.v1.views.users import *
+from api.v1.views.places import *
+from api.v1.views.places_reviews import *
+from api.v1.views.places_amenities import *
